@@ -2,6 +2,13 @@
 
 > Marca cada paso a medida que lo entiendas. No tienes que terminarlo todo de una sentada; vuelve cuando puedas.
 
+<!--
+Reglas para Claude: este fichero es del usuario. Nunca lo regeneres, nunca borres
+entradas y nunca cambies el estado de una casilla. Las entradas nuevas se insertan
+justo ENCIMA del marcador `placeholder:…` de su sección, de modo que el
+marcador quede siempre al final y se conserve el orden de inserción.
+-->
+
 ## Fase 1 — Visión general
 
 - [ ] He leído `01-vision-general.md`
@@ -11,6 +18,10 @@
 - [ ] Identifico los entry points principales
 - [ ] El diagrama de flujo general me cuadra
 
+_(Si pediste explicación de alguna tecnología, aparecerá aquí: `- [ ] Tecnología X comprendida`)_
+
+<!-- placeholder:tecnologias -->
+
 ## Fase 2 — Mini-flujos
 
 _(Se irá rellenando con un `- [ ]` por cada mini-flujo elegido, anteponiendo su número: `- [ ] Mini-flujo 01 '<nombre>' comprendido`)_
@@ -19,7 +30,7 @@ _(Se irá rellenando con un `- [ ]` por cada mini-flujo elegido, anteponiendo su
 
 ## Fase 2.2 — Drill-down (opcional)
 
-_(Se irá rellenando solo para los mini-flujos que se profundicen)_
+_(Se irá rellenando solo para los mini-flujos que se profundicen: `- [ ] Drill-down 01 '<nombre>' comprendido`)_
 
 <!-- placeholder:drill_down -->
 
@@ -32,8 +43,10 @@ _(Se irá rellenando solo para los mini-flujos que se profundicen)_
 
 ## Fase 4 — Implementación con mocks
 
-- [ ] He ejecutado al menos un script de `04-implementacion-mocks/`
-- [ ] La salida del script coincide con `NN-<flujo>-expected-output.md`
 - [ ] Distingo en cada script qué es código real del programa y qué es mock de frontera
-- [ ] Sé cómo modificar el dataset mokeado para probar variantes
+- [ ] Sé cómo modificar el dataset mockeado para probar variantes
 - [ ] Podría reproducir cualquier mini-flujo cubierto con datos propios
+
+_(Se irá rellenando con un `- [ ]` por cada script generado: `- [ ] Script 01 '<flujo>' ejecutado y entendido`)_
+
+<!-- placeholder:scripts -->

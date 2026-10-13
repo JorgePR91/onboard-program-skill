@@ -88,13 +88,16 @@ sequenceDiagram
 | 1 | {{ACCION}} | `{{FILE:LINE}}` | {{NOTA}} |
 | 2 | {{ACCION}} | `{{FILE:LINE}}` | {{NOTA}} |
 
-## Datos mokeados de entrada
+## Datos mockeados de entrada
 
 ```{{LENGUAJE_FORMATO}}
 {{DATOS_MOCK_ENTRADA}}
 ```
 
-## Salida esperada
+## Salida aproximada
+
+> **Aproximada:** deducida leyendo el código, no ejecutada. Se verificará en la Fase 4
+> (`04-implementacion-mocks/{{NUMERO_FLUJO}}-{{NOMBRE_FLUJO}}-expected-output.md`); si allí difiere, este apartado se corregirá.
 
 ```{{LENGUAJE_FORMATO}}
 {{SALIDA_ESPERADA}}
@@ -114,5 +117,5 @@ _Casos límite, errores típicos, configuraciones alternativas que merece la pen
 ## Próximo paso sugerido
 
 - ¿Pasar al siguiente mini-flujo?
-- ¿Profundizar a nivel de función/fichero? → genera `<nombre>-detalle.md` (Fase 2.2)
+- ¿Profundizar a nivel de función/fichero? → genera `{{NUMERO_FLUJO}}-{{NOMBRE_FLUJO}}-detalle.md` (Fase 2.2)
 - ¿Saltar al repaso (Fase 3)?

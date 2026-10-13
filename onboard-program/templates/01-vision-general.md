@@ -1,6 +1,8 @@
 # Visión general — {{NOMBRE_PROGRAMA}}
 
 > Documento generado en Fase 1 del onboarding. Léelo de arriba abajo: te dejará en condiciones de entender el resto.
+>
+> **Commit analizado:** `{{COMMIT_ANALIZADO}}` · {{FECHA}} — las referencias `fichero:línea` de todo el onboarding apuntan a este commit; si el código ha cambiado desde entonces, pueden haberse desplazado.
 
 ## 1. Qué hace
 

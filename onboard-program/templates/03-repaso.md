@@ -1,6 +1,6 @@
 # Repaso — {{NOMBRE_PROGRAMA}}
 
-> Documento generado en Fase 3. Consolida lo aprendido antes de pasar a la ejecución con datos mokeados.
+> Documento generado en Fase 3. Consolida lo aprendido antes de pasar a la ejecución con datos mockeados.
 
 ## Mini-flujos cubiertos
 
@@ -43,4 +43,4 @@ Aparece en: `{{FILE:LINE}}`, `{{FILE:LINE}}`
 
 ## Próximo paso
 
-Fase 4 — Implementación con datos mokeados. Tendrás scripts ejecutables para cada mini-flujo cubierto.
+Fase 4 — Implementación con datos mockeados. Tendrás scripts ejecutables para cada mini-flujo cubierto.

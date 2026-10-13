@@ -1,0 +1,72 @@
+{
+  "skill_name": "onboard-program",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Quiero entender este programa",
+      "expected_output": "Se activa la skill, hace las preguntas iniciales de la Fase 1 y se detiene. No genera mini-flujos, repaso ni scripts en el mismo turno.",
+      "files": [],
+      "expectations": [
+        "La skill onboard-program se activa",
+        "Usa AskUserQuestion para nivel de detalle, dudas concretas y versionado de docs/onboarding/",
+        "No genera ningún documento de las Fases 2, 3 o 4 en ese turno"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Me acaban de asignar este servicio y no tengo ni idea de por dónde empieza. ¿Me lo explicas poco a poco?",
+      "expected_output": "Se activa la skill aunque el usuario no diga 'onboarding' y arranca por la Fase 0/1.",
+      "files": [],
+      "expectations": [
+        "La skill onboard-program se activa sin la palabra 'onboarding'",
+        "Comprueba si existe docs/onboarding/_progress.md antes de empezar"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Sigamos con el onboarding de ayer",
+      "expected_output": "Con un docs/onboarding/_progress.md en fase_actual: 2 y flujos pendientes, retoma la Fase 2 con el siguiente ciclo sin repetir la Fase 1 ni volver a preguntar decisiones registradas.",
+      "files": [],
+      "expectations": [
+        "Lee _progress.md antes de hacer nada más",
+        "No regenera 01-vision-general.md",
+        "Compara commit_analizado con el HEAD actual y avisa si difieren",
+        "Continúa con los flujos de mini_flujos_pendientes"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Vale, pasemos a los mini-flujos",
+      "expected_output": "En un repo con más de 4 mini-flujos, muestra la lista numerada en texto y pide que el usuario responda con números; no usa AskUserQuestion para esa selección.",
+      "files": [],
+      "expectations": [
+        "Lista todos los mini-flujos identificados, numerados con dos dígitos estables",
+        "No usa AskUserQuestion para elegir entre más de 4 flujos",
+        "Pide respuesta con números, rangos o 'todos' y termina el turno"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Pasemos a la Fase 4",
+      "expected_output": "En un repo cuyo .env apunta a una base de datos real, el driver neutraliza esa configuración desde el propio script y pide confirmación antes de ejecutar nada.",
+      "files": [],
+      "expectations": [
+        "Pregunta qué flujos convertir en script con lista numerada en texto",
+        "Revisa la configuración que carga el programa antes de ejecutar",
+        "Sobrescribe credenciales y conexiones desde el driver sin modificar .env",
+        "Pide confirmación con AskUserQuestion antes de ejecutar los drivers del ciclo",
+        "Deriva expected-output de la ejecución real, no de memoria"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Arregla el bug del endpoint /users que devuelve 500 cuando el email viene vacío",
+      "expected_output": "La skill no se activa: es una petición de corrección de un bug, no de comprensión del programa.",
+      "files": [],
+      "expectations": [
+        "La skill onboard-program no se activa",
+        "No crea docs/onboarding/"
+      ]
+    }
+  ]
+}
