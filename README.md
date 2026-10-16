@@ -1,19 +1,41 @@
+<div align="center">
+
 # onboard-program
 
-<p align="center">
-  <img src="IMAGE.svg" width="350" alt="onboard-program" />
-</p>
+<img src="IMAGE.svg" width="320" alt="Ilustración de onboard-program" />
 
-<p align="center"><em>En el curro te han dado un programa y tienes que entenderlo PARA AYER...</em></p>
+*En el curro te han dado un programa y tienes que entenderlo PARA AYER...*
 
-**onboard-program** es una skill para Claude Code que acompaña a un desarrollador/a nuevo/a, paso a paso, en la comprensión de un programa, servicio o repositorio que no conoce. Convierte el "no entiendo este programa" en un recorrido guiado que va de lo general a lo concreto y deja en el repo documentación, diagramas, un checklist y scripts ejecutables con datos mockeados.
+[![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-D97757)](https://docs.claude.com/en/docs/claude-code/skills)
+[![Idioma: español](https://img.shields.io/badge/idioma-espa%C3%B1ol-blue)](#)
+[![Sin dependencias](https://img.shields.io/badge/dependencias-ninguna-brightgreen)](#instalación)
 
+**Español** · [English](README.en.md) · [Valencià](README.ca.md)
+
+</div>
+
+**onboard-program** es una skill para [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) que acompaña a un desarrollador/a nuevo/a, paso a paso, en la comprensión de un programa, servicio o repositorio que no conoce. Convierte el "no entiendo este programa" en un recorrido guiado que va de lo general a lo concreto y deja en el repo documentación, diagramas, un checklist y scripts ejecutables con datos mockeados.
+
+## Contenido
+
+- [Inicio rápido](#inicio-rápido)
 - [Qué obtienes](#qué-obtienes)
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Cómo funciona](#cómo-funciona)
 - [Principios de diseño](#principios-de-diseño)
 - [Estructura del repositorio](#estructura-del-repositorio)
+- [Contribuir](#contribuir)
+
+## Inicio rápido
+
+```bash
+git clone https://github.com/JorgePR91/onboard-program-skill-.git
+mkdir -p ~/.claude/skills
+cp -r onboard-program-skill-/onboard-program ~/.claude/skills/
+```
+
+Abre Claude Code en el repositorio que quieres entender y escribe: *"Quiero entender este programa"*.
 
 ## Qué obtienes
 
@@ -38,26 +60,39 @@ Al terminar el recorrido, el repositorio analizado contiene una carpeta `docs/on
         └── ...
 ```
 
-En stacks compilados (Java, .NET, Go…), el driver de cada flujo es un test dentro del árbol de tests del proyecto, en una carpeta `onboarding/`, y `run-NN-<flujo>` solo lo lanza. Claude te pide permiso antes de escribir fuera de `docs/onboarding/`. Al empezar te pregunta también si quieres versionar `docs/onboarding/` o añadirla a `.gitignore`.
+Cada documento incluye diagramas Mermaid (GitHub los renderiza directamente), referencias `fichero:línea` al código y, cuando hace falta, un glosario con analogías cotidianas para que no quede jerga sin explicar.
 
-Cada documento incluye diagramas Mermaid, referencias `fichero:línea` al código y, cuando hace falta, un glosario con analogías cotidianas para que no quede jerga sin explicar.
+> [!NOTE]
+> En stacks compilados (Java, .NET, Go…), el driver de cada flujo es un test dentro del árbol de tests del proyecto, en una carpeta `onboarding/`, y `run-NN-<flujo>` solo lo lanza. Claude te pide permiso antes de escribir fuera de `docs/onboarding/`. Al empezar te pregunta también si quieres versionar `docs/onboarding/` o añadirla a `.gitignore`.
 
 ## Instalación
 
-No hay que compilar ni instalar dependencias: basta con copiar la carpeta `onboard-program` (con `SKILL.md` y `templates/`) al directorio de skills de usuario.
+### Requisitos
 
-**Windows (PowerShell)**, desde la raíz de este repo:
+- [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) instalado.
+- Nada más: no hay que compilar ni instalar dependencias.
 
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
-Copy-Item -Recurse .\onboard-program "$HOME\.claude\skills\"
+### 1. Clona el repositorio
+
+```bash
+git clone https://github.com/JorgePR91/onboard-program-skill-.git
+cd onboard-program-skill-
 ```
 
-**macOS / Linux**:
+### 2. Copia la skill al directorio de skills de usuario
+
+**macOS / Linux**
 
 ```bash
 mkdir -p ~/.claude/skills
 cp -r onboard-program ~/.claude/skills/
+```
+
+**Windows (PowerShell)**
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+Copy-Item -Recurse .\onboard-program "$HOME\.claude\skills\"
 ```
 
 El resultado debe quedar así:
@@ -69,9 +104,22 @@ El resultado debe quedar así:
 └── evals/        ← casos de prueba (opcional, no afecta al uso)
 ```
 
-Después, abre (o reinicia) Claude Code para que detecte la skill. Al ser una skill de usuario, queda disponible en todos tus proyectos.
+### 3. Reinicia Claude Code
 
+Abre (o reinicia) Claude Code para que detecte la skill. Al ser una skill de usuario, queda disponible en todos tus proyectos.
+
+> [!TIP]
 > **¿Solo para un proyecto?** Cópiala en `.claude/skills/onboard-program/` dentro de ese repositorio y estará disponible únicamente allí (y para quien clone el repo).
+
+### Actualizar
+
+```bash
+cd onboard-program-skill-
+git pull
+cp -r onboard-program ~/.claude/skills/
+```
+
+En Windows, repite el `Copy-Item` del paso 2 añadiendo `-Force`.
 
 ## Uso
 
@@ -93,6 +141,16 @@ No hace falta usar la palabra "onboarding": la skill se activa siempre que pidas
 
 El recorrido tiene cuatro fases. Al final de cada una, Claude **se para y te pregunta** cómo seguir.
 
+```mermaid
+flowchart LR
+    F0[0. Recepción] --> F1[1. Visión general]
+    F1 --> F2[2. Mini-flujos]
+    F2 -.->|opcional| F22[2.2 Drill-down]
+    F22 -.-> F2
+    F2 --> F3[3. Repaso]
+    F3 --> F4[4. Implementación con mocks]
+```
+
 | Fase | Objetivo | Salida |
 |------|----------|--------|
 | 0. Recepción | Comprobar si hay un onboarding a medias y retomarlo | Lectura de `_progress.md` |
@@ -102,13 +160,16 @@ El recorrido tiene cuatro fases. Al final de cada una, Claude **se para y te pre
 | 3. Repaso | Consolidar: dependencias, patrones repetidos y riesgos | `03-repaso.md` |
 | 4. Implementación con mocks | Ejecutar los flujos sobre el código real con datos sintéticos | `04-implementacion-mocks/` |
 
-Algunos detalles de cada fase:
+<details>
+<summary><strong>Detalles de cada fase</strong></summary>
 
 - **Fase 1 se adapta a tu nivel.** Claude detecta las tecnologías clave del programa (lenguaje, framework, base de datos, broker…) y te pregunta cuáles no dominas. Solo explica esas, así no aburre a un perfil senior ni deja perdido a uno junior.
 - **Fase 2 trabaja por ciclos.** Claude identifica *todos* los mini-flujos (endpoints, comandos CLI, jobs, eventos consumidos…), tú eliges cuáles explorar y se documentan en tandas de hasta 4, con una parada entre tandas. Ningún flujo elegido se descarta sin que lo confirmes.
 - **Fase 2 da una salida aproximada.** Cada mini-flujo incluye la salida que se deduce leyendo el código, marcada como aproximada. La Fase 4 la verifica ejecutando y, si no coincide, corrige el documento.
 - **Fase 4 también va por ciclos, y pide confirmación antes de ejecutar.** Eliges qué flujos convertir en script. Antes de ejecutar cada tanda, Claude neutraliza la configuración que podría tocar sistemas reales (credenciales, cadenas de conexión, URLs de producción) y te pide permiso. Tus ficheros de configuración no se modifican.
 - **Numeración estable.** Cada mini-flujo recibe un número (`01`, `02`…) que no cambia aunque lo explores en otro orden o descartes otros. Ese número aparece en todos los sitios donde se menciona el flujo: la lista inicial, `_progress.md`, nombres de fichero, títulos, checklist, repaso y scripts de la Fase 4 (`run-NN-<flujo>.<ext>`, `NN-<flujo>-input.json`, `NN-<flujo>-expected-output.md`). El flujo `07` es siempre el `07`.
+
+</details>
 
 ## Principios de diseño
 
@@ -126,15 +187,25 @@ Algunos detalles de cada fase:
 
 ## Estructura del repositorio
 
-| Ruta | Función |
-|------|---------|
-| `README.md` | Esta documentación, para personas (no forma parte de la skill) |
-| `IMAGE.svg` | Imagen del README |
-| `onboard-program/SKILL.md` | Instrucciones para Claude: qué hacer en cada fase |
-| `onboard-program/templates/` | Plantillas que Claude rellena al generar cada documento |
-| `onboard-program/evals/evals.json` | Casos de prueba para comprobar que la skill se activa y se comporta como debe |
-
-Plantillas disponibles: `01-vision-general.md`, `02-flujo.md`, `02-flujo-detalle.md`, `03-repaso.md`, `04-expected-output.md`, `checklist.md` y `_progress.md`.
+```
+.
+├── README.md                  ← esta documentación (no forma parte de la skill)
+├── README.en.md               ← documentación en inglés
+├── README.ca.md               ← documentación en valenciano
+├── IMAGE.svg                  ← imagen del README
+└── onboard-program/           ← la skill: esta es la carpeta que se copia
+    ├── SKILL.md               ← instrucciones para Claude: qué hacer en cada fase
+    ├── templates/             ← plantillas que Claude rellena en cada documento
+    │   ├── _progress.md
+    │   ├── checklist.md
+    │   ├── 01-vision-general.md
+    │   ├── 02-flujo.md
+    │   ├── 02-flujo-detalle.md
+    │   ├── 03-repaso.md
+    │   └── 04-expected-output.md
+    └── evals/
+        └── evals.json         ← casos de prueba de activación y comportamiento
+```
 
 ### Skills complementarias
 
@@ -142,3 +213,10 @@ Si las tienes instaladas, la skill puede apoyarse en ellas. No son obligatorias:
 
 - `project-workflow-analysis-blueprint-generator`: para detectar arquitectura y stack con más rigor en la Fase 1.
 - `test-data-generation`: para generar datos mockeados más realistas en la Fase 4.
+
+## Contribuir
+
+Las sugerencias y correcciones son bienvenidas:
+
+- **¿Algo no funciona como esperabas?** Abre un [issue](https://github.com/JorgePR91/onboard-program-skill-/issues) indicando qué le pediste a Claude, qué hizo y qué esperabas que hiciera.
+- **¿Quieres proponer un cambio?** Haz un fork, crea una rama y abre un pull request. Si cambias el comportamiento de la skill en [`SKILL.md`](onboard-program/SKILL.md), añade o actualiza el caso correspondiente en [`evals/evals.json`](onboard-program/evals/evals.json).
